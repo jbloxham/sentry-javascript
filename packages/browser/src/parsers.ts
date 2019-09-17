@@ -39,7 +39,7 @@ export function eventFromPlainObject(exception: {}, syntheticException: Error | 
     extra: {
       __serialized__: normalizeToSize(exception),
     },
-    message: `Non-Error exception captured with keys: ${keysToEventMessage(exceptionKeys)}`,
+    message: `Non-Error exception captured with ekeys: ${keysToEventMessage(exceptionKeys)}`,
   };
 
   if (syntheticException) {
@@ -93,11 +93,11 @@ export function prepareFramesForEvent(stack: TraceKitStackFrame[]): StackFrame[]
   return localStack
     .map(
       (frame: TraceKitStackFrame): StackFrame => ({
-        colno: frame.column,
+        colno: frame.column === null ? undefined : frame.column,
         filename: frame.url || localStack[0].url,
         function: frame.func || '?',
         in_app: true,
-        lineno: frame.line,
+        lineno: frame.line === null ? undefined : frame.line,
       }),
     )
     .slice(0, STACKTRACE_LIMIT)

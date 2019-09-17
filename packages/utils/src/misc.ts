@@ -220,3 +220,14 @@ export function addExceptionTypeValue(
   event.exception.values[0].type = event.exception.values[0].type || type || 'Error';
   event.exception.values[0].mechanism = event.exception.values[0].mechanism || mechanism;
 }
+
+/**
+ * A safe form of location.href
+ */
+export function getLocationHref(): string {
+  try {
+    return document.location.href;
+  } catch (oO) {
+    return '';
+  }
+}
